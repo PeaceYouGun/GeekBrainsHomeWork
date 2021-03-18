@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URL;
 
-public class SwingClient extends JFrame implements ActionListener {
+public class SwingClient extends JFrame implements ActionListener, MessageProcessor {
     private static final int WIN_WIDTH = 400;
     private static final int WIN_HEIGHT = 300;
 
@@ -25,11 +25,13 @@ public class SwingClient extends JFrame implements ActionListener {
 //    private final JButton btnLogin = new JButton("Login");
 
     private final JPanel panelBottom = new JPanel(new BorderLayout());
-//    private final JButton btnDisconnect = new JButton("<html><b>Disconnect</b></html>");
+    //    private final JButton btnDisconnect = new JButton("<html><b>Disconnect</b></html>");
     private final JTextField tfMessage = new JTextField(8); // 8 - клавиша Enter вызывает обраюотчик события
     private final JButton btnSend = new JButton("<html><b>Send</b></html>");
 
     private final JList<String> userList = new JList<>();
+
+    private MessageService messageService;
 
     public static void main(String[] args) {
 //        SwingUtilities.invokeLater(new Runnable() {  // запуск Swing'а в отдельном потоке с помощью invokeLater
@@ -83,6 +85,9 @@ public class SwingClient extends JFrame implements ActionListener {
         add(scrollUsers, BorderLayout.EAST);
         add(panelBottom, BorderLayout.SOUTH);
 
+//        Thread.setDefaultUncaughtExceptionHandler((Thread.UncaughtExceptionHandler) this);
+        messageService = new ChatMessageService("localhost", 65500, this);
+
         setVisible(true);
     }
 
@@ -133,7 +138,7 @@ public class SwingClient extends JFrame implements ActionListener {
         return edit;
     }
 
-     private JMenu createHelpMenu() {
+    private JMenu createHelpMenu() {
         JMenu help = new JMenu("Help");
         JMenuItem link = new JMenuItem("Help");
         help.add(link);
@@ -159,8 +164,13 @@ public class SwingClient extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         Object src = e.getSource();
         if (src == btnSend || src == tfMessage) {
-            log.append(tfMessage.getText() + System.lineSeparator());
+            messageService.sendMessage(tfMessage.getText());
             tfMessage.setText("");
         }
+    }
+
+    @Override
+    public void processMessage(String msg) {
+        log.append(msg + System.lineSeparator());
     }
 }
