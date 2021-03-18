@@ -11,7 +11,5 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="Java_02" />
-    <orderEntry type="module" module-name="ChatClientNetwork" />
   </component>
 </module>

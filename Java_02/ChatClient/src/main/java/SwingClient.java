@@ -72,24 +72,15 @@ public class SwingClient extends JFrame implements ActionListener {
         userList.setListData(users);
         scrollUsers.setPreferredSize(new Dimension(100, 0));
 
-//        cbAlwaysOnTop.addActionListener(this);
         btnSend.addActionListener(this);
         tfMessage.addActionListener(this);
         btnSend.setPreferredSize(new Dimension(100, 25));
 
-//        panelTop.add(tfIPAddress);
-//        panelTop.add(tfPort);
-//        panelTop.add(cbAlwaysOnTop);
-//        panelTop.add(tfLogin);
-//        panelTop.add(tfPassword);
-//        panelTop.add(btnLogin);
-//        panelBottom.add(btnDisconnect, BorderLayout.WEST);
         panelBottom.add(tfMessage, BorderLayout.CENTER);
         panelBottom.add(btnSend, BorderLayout.EAST);
 
         add(scrollLog, BorderLayout.CENTER);
         add(scrollUsers, BorderLayout.EAST);
-//        add(panelTop, BorderLayout.NORTH);
         add(panelBottom, BorderLayout.SOUTH);
 
         setVisible(true);
@@ -144,10 +135,8 @@ public class SwingClient extends JFrame implements ActionListener {
 
      private JMenu createHelpMenu() {
         JMenu help = new JMenu("Help");
-
         JMenuItem link = new JMenuItem("Help");
         help.add(link);
-
         link.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
